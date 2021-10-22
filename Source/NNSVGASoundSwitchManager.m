@@ -8,6 +8,10 @@
 
 #import "NNSVGASoundSwitchManager.h"
 static NSString *const kNNSVGASoundSwitchManagerIsCloseSoundsKey = @"kNNSVGASoundSwitchManagerIsCloseSoundsKey";
+
+@interface NNSVGASoundSwitchManager()
+@property (nonatomic, assign) BOOL isCloseSounds;
+@end
 @implementation NNSVGASoundSwitchManager
 
 + (instancetype)shareManager {
@@ -21,11 +25,14 @@ static NSString *const kNNSVGASoundSwitchManagerIsCloseSoundsKey = @"kNNSVGASoun
     return instance;
 }
 
-- (void)setIsCloseSounds:(BOOL)isCloseSounds {
-    _isCloseSounds = isCloseSounds;
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [[NSUserDefaults standardUserDefaults] setBool:isCloseSounds forKey:kNNSVGASoundSwitchManagerIsCloseSoundsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    });
+- (void)updateIsCloseSounds:(BOOL)isClose save:(BOOL)save {
+    _isCloseSounds = isClose;
+    if (save) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [[NSUserDefaults standardUserDefaults] setBool:isClose forKey:kNNSVGASoundSwitchManagerIsCloseSoundsKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        });
+    }
 }
+
 @end
