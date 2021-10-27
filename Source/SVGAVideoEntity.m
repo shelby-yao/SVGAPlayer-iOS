@@ -12,7 +12,6 @@
 #import "SVGAVideoSpriteEntity.h"
 #import "SVGAAudioEntity.h"
 #import "Svga.pbobjc.h"
-#import "NNSVGASoundSwitchManager.h"
 #define MP3_MAGIC_NUMBER "ID3"
 
 @interface SVGAVideoEntity ()
@@ -181,9 +180,7 @@ static NSMapTable * weakCache;
         }
     }
     self.images = images;
-    if (!NNSVGASoundSwitchManager.shareManager.isCloseSounds) {    
-        self.audiosData = audiosData;
-    }
+    self.audiosData = audiosData;
 }
 
 - (void)resetSpritesWithProtoObject:(SVGAProtoMovieEntity *)protoObject {
